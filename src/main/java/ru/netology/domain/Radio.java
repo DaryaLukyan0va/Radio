@@ -1,56 +1,75 @@
 package ru.netology.domain;
 
 public class Radio {
-    public int currentStation;
-    public int currentVolume;
+    private int numberStation;
+    private int currentStation;
+    private int currentVolume;
+    private int minVolume = 0;
+    private int maxVolume = 100;
+
+    public Radio(int numberStation) {
+        this.numberStation = numberStation;
+    }
+
+    public Radio() {
+        this.numberStation = 10;
+    }
 
     public int getCurrentStation() {
         return currentStation;
     }
 
+    public int getCurrentVolume() {
+        return currentVolume;
+    }
+
+    public void setCurrentVolume(int currentVolume) {
+        this.currentVolume = currentVolume;
+    }
+
     public void setCurrentStation(int currentStation) {
-        if(currentStation >= 0 && currentStation <= 9) {
+        if (currentStation >= 0 && currentStation < numberStation) {
             this.currentStation = currentStation;
-        }
-        else {
+        } else {
             System.out.println("Вы указали неверную станцию");
         }
     }
 
-    public void nextStation() {
-        if (currentStation < 9) {
+    public int nextStation() {
+        if (currentStation == numberStation - 1) {
+            currentStation = 0;
+        } else {
             currentStation = currentStation + 1;
         }
-        else {
-            currentStation = 0;
-        }
-    }
-    public void prevStation() {
-        if (currentStation > 0) {
-            currentStation = currentStation - 1;
-        }
-        else {
-            currentStation = 9;
-        }
+        return currentStation;
     }
 
-    public void increaseVolume() {
-        if (currentVolume < 10) {
-            currentVolume = currentVolume + 1;
+    public int prevStation() {
+        if (currentStation > 0) {
+            currentStation = currentStation - 1;
+        } else {
+            currentStation = numberStation - 1;
         }
-        else {
-            currentVolume = 10;
+        return currentStation;
+    }
+
+
+    public void increaseVolume() {
+        if (currentVolume < maxVolume) {
+            currentVolume = currentVolume + 1;
+        } else {
+            currentVolume = maxVolume;
             System.out.println("Максимальная громкость");
         }
     }
 
     public void decreaseVolume() {
-        if (currentVolume > 0) {
+        if (currentVolume > minVolume) {
             currentVolume = currentVolume - 1;
-        }
-        else {
-            currentVolume = 0;
+        } else {
+            currentVolume = minVolume;
             System.out.println("Минимальная громкость");
         }
     }
+
 }
